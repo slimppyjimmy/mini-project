@@ -1,0 +1,58 @@
+
+<template>
+  <div >
+    <div class="sChart_zhe">
+      <schart :canvasId="canvasId1"
+              :type="type"
+              :data="detail"
+              :height="height"
+              :width="width"
+              :options="options"
+      ></schart>
+    </div>
+    <!--<mysChart_zhu></mysChart_zhu>-->
+  </div>
+</template>
+
+<script>
+  import Schart from 'vue-schart';
+  import mysChart_zhu from './sChart_zhu.vue';
+    export default {
+        name: 'mysChart_zhe',
+        data () {
+          return {
+            canvasId1: 'myCanvas1',
+            /*type:line,折线图,bar柱形图,ring环形图,pie饼状图,*/
+            type: 'pie',
+            width: 900,
+            height: 900,
+            detail: [],
+            options: {
+              title: '折线图'
+            },
+          }
+        },
+      created () {
+        this.$axios.get('/api/manage_tu')
+          .then((res)=>{
+            for(let i=0;i<res.data.length;i++){
+              this.detail.push(res.data[i])
+            }
+          })
+      },
+        methods: {
+
+        },
+      components:{
+        Schart:Schart,
+        mysChart_zhu:mysChart_zhu,
+      }
+    }
+</script>
+<style scoped>
+    .sChart_zhe {
+      width: 900px;
+    }
+.myCanvas1{
+}
+</style>

@@ -1,0 +1,75 @@
+
+<template>
+  <div onload="load">
+
+
+    <div class="sChart_zhe">
+      <schart :canvasId="canvasId1"
+              :type="type"
+              :data="detail"
+              :height="height"
+              :width="width"
+              :options="options"
+      ></schart>
+    </div>
+    <mysChart_zhu></mysChart_zhu>
+  </div>
+</template>
+
+<script>
+  import Schart from 'vue-schart';
+  import mysChart_zhu from './sChart_zhu.vue';
+    export default {
+        name: 'mysChart_zhe',
+        data () {
+          return {
+            canvasId1: 'myCanvas1',
+            /*type:line,折线图,bar柱形图,ring环形图,pie饼状图,*/
+            type: 'line',
+            width: 500,
+            height: 400,
+            detail: [
+//              {name: '', value: ''},
+              {name: '椅子', value: 2123},
+              {name: '茶几', value: 1654},
+//              {name: '床', value: 1795},
+            ],
+            options: {
+              title: '折线图'
+            },
+          }
+        },
+      created () {
+//        console.log("请求http://localhost:8888/manage_tu")
+        this.$axios.get('http://localhost:8888/manage_tu')
+          .then((res)=>{
+                console.log(res.data);
+//                console.log(this);
+                console.log(this.detail);
+                console.log(this.detail[0]);
+                console.log(this.detail[0].name);
+//                console.log(res.data[0].sc_name);
+//            this.detail[0].name=res.data[0].sc_name
+            for(let i=0;i<res.data.length;i++){
+                console.log(res.data[i])
+                console.log(res.data[i].sc_name)
+                console.log(res.data[i].num_sum)
+              this.detail[i].name=res.data[i].sc_name
+              this.detail[i].value=res.data[i].num_sum
+              console.log(this.detail);
+            }
+          })
+      },
+        methods: {
+
+        },
+      components:{
+        Schart:Schart,
+        mysChart_zhu:mysChart_zhu,
+      }
+    }
+</script>
+<style scoped>
+    .sChart_zhe {
+    }
+</style>

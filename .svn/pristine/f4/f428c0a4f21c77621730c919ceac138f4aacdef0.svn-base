@@ -1,0 +1,35 @@
+<template>
+  <div id="app">
+    <mynav></mynav>
+    <maincontent></maincontent>
+  </div>
+</template>
+
+<script>
+  import mynav from "./components/nav/nav.vue";
+  import maincontent from "./components/maincontent/maincontent.vue";
+  export default {
+    name: 'App',
+    components:{
+      mynav:mynav,
+      maincontent:maincontent
+    }
+  }
+</script>
+
+<style>
+  @import "assets/animate.css";
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  a{
+    text-decoration: none;
+    color: gray;
+  }
+</style>

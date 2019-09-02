@@ -1,0 +1,141 @@
+<template>
+      <div class="login">
+        <h2>梵几管理系统登录</h2>
+        <form  @submit.prevent="submit">
+          <div class="user">
+          <span>账号:</span> <input type="text" placeholder="账号" v-model="inputtext.name">
+          </div>
+          <div class="user password">
+          <span>密码:</span> <input type="password" placeholder="密码" v-model="inputtext.password">
+          </div>
+          <div class="user password">
+          <span>验证码:</span> <input type="text" placeholder="验证码" v-model="inputtext.code">
+          </div>
+          <div class="random" @click="code_click">{{code}}</div>
+          <input type="submit" value="登录" class="submit">
+        </form>
+      </div>
+
+</template>
+
+<script>
+
+    export default {
+        name: 'login',
+        data() {
+            return{
+              inputtext:{},
+              code:0
+            }
+        },
+      methods:{
+        submit(){
+//            console.log()
+          if(this.inputtext.name==undefined||this.inputtext.password==undefined||this.inputtext.name==""||this.inputtext.password==""){
+              alert("请输入用户名和密码在登录");
+            this.code_click()
+          }else if(this.inputtext.code==undefined||this.inputtext.code==""){
+            alert("请输入验证码再登录");
+
+          }else if(this.inputtext.code!=this.code){
+            alert("验证码错误")
+
+          }else{
+            this.$axios.get('/api/manage/admin_login',{params:{name:this.inputtext.name,password:this.inputtext.password,code:this.inputtext.code}})
+              .then((res)=>{
+//                console.log(res)
+//                console.log(res.data[0].adminId);
+                if(res.data==""){
+                  alert("用户名或者密码错误");
+                }else{
+                  alert("登录成功");
+//                  this.$store.state.myId=res.data[0].adminId;
+                  this.$store.commit("changgeId",res.data[0].adminId);
+//                  console.log(this.$store.state.myId)
+                  this.$emit('controller')
+                  this.$router.push({path:'/index'});
+                }
+              })
+              .catch((err)=>{
+                console.log(err);
+              });
+          }
+        },
+        code_click(){
+          let code="";
+          for(let i=0;i<4;i++){
+            let b=parseInt(Math.random()*9);
+            code+=b;
+          }
+          this.code=code;
+        }
+      },
+      created(){
+            let code="";
+            for(let i=0;i<4;i++){
+              let a=parseInt(Math.random()*9);
+              code+=a;
+            }
+        this.code=code;
+//            console.log(code);
+//        console.log(this.code)
+      }
+    }
+
+
+</script>
+<style scoped>
+  .login{
+    width: 500px;
+background-color: rgb(245,245,245);
+    margin: 100px auto;
+    padding: 15px;
+    height: 400px;
+    position: absolute;
+
+    left: calc(50% - 250px);
+    border-radius: 15px;
+  }
+  .login h2{
+    text-align: center;
+    padding: 20px;
+  }
+.user{
+  width: 100%;
+  height: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.49);
+  margin-bottom: 10px;
+}
+  .user input{
+    height: 37px;
+    line-height: 40px;
+    width: calc(100% - 85px);
+    border: none;
+    /*outline: 1px solid rgba(0, 0, 0, 0.74);*/
+    border-left: 1px solid rgba(0, 0, 0, 0.49);
+    padding-left: 10px;
+  }
+  .user span{
+    width: 80px;
+    line-height: 40px;
+    display: inline-block;
+    text-align: center;
+
+  }
+  .submit{
+    width: 50%;
+    text-align: center;
+    display: block;
+    padding: 10px;
+    margin: 20px  auto 0;
+  }
+  .random{
+    height: 60px;
+    width: 150px;
+    background-color: #afae75;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 60px;
+    font-size: 20px;
+  }
+</style>

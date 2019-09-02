@@ -1,0 +1,8 @@
+import goods from '@/components/goods/goods'
+export default [
+  {
+    path: '/goods',
+    name: 'goods',
+    component: goods
+  },
+]

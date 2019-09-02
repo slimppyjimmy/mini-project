@@ -1,0 +1,24 @@
+import login from '@/components/xr/login'
+
+import mysChart_zhu from '@/components/xr/sChart_zhu'
+import mysChart_zhe from '@/components/xr/sChart_zhe'
+
+export default [
+  // {
+  //   path: '/login',
+  //   name: 'login',
+  //   component: login
+  // },
+  //
+  // {
+  //   path: '/mysChart_zhu',
+  //   name: 'mysChart_zhu',
+  //   component: mysChart_zhu
+  // },
+  {
+    path: '/index',
+    name: 'mysChart_zhe',
+    component: mysChart_zhe
+  },
+]
+

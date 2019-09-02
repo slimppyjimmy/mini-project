@@ -1,0 +1,17 @@
+<template>
+  <div id="app">
+    <nav>
+      <ul>
+
+      </ul>
+    </nav>
+  </div>
+</template>
+<script>
+  export default {
+      name:'mynav'
+  }
+</script>
+<style scoped>
+
+</style>
